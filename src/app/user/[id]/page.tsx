@@ -3,14 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 
 type UserProfilePageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function UserProfilePage({ params }: UserProfilePageProps) {
+  const { id } = await params;
   const user = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       posts: {
         orderBy: {

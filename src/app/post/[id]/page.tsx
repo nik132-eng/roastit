@@ -5,15 +5,16 @@ import { getAuthSession } from "@/lib/auth";
 import RoastForm from "@/components/RoastForm";
 
 type PostPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default async function PostPage({ params }: PostPageProps) {
+  const { id } = await params;
   const session = await getAuthSession();
   const post = await prisma.post.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       author: true,
       roasts: {

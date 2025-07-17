@@ -36,8 +36,12 @@ export default function UploadPage() {
 
       const data = await res.json()
       router.push(`/post/${data.id}`)
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
     } finally {
       setIsUploading(false)
     }

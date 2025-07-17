@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import cloudinary from "@/lib/cloudinary";
+import cloudinary, { UploadApiResponse } from "cloudinary";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,22 +25,27 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await image.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
 
-    const uploadResult = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          tags: ["roastit-uploads"],
-        },
-        (error, result) => {
-          if (error) {
-            reject(error);
-            return;
+    const uploadResult = (await new Promise((resolve, reject) => {
+      cloudinary.v2.uploader
+        .upload_stream(
+          {
+            tags: ["roastit-uploads"],
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+              return;
+            }
+            if (!result) {
+              reject(new Error("Upload failed, no result returned"));
+              return;
+            }
+            resolve(result);
           }
-          resolve(result);
-        }
-      ).end(buffer);
-    });
+        )
+        .end(buffer);
+    })) as UploadApiResponse;
 
-    // @ts-ignore
     const { secure_url } = uploadResult;
 
     if (!secure_url) {
@@ -58,7 +63,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(post, { status: 201 });
   } catch (error) {
     console.error("Error in POST /api/posts:", error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
     return NextResponse.json(
       { message: "Failed to create post", error: errorMessage },
       { status: 500 }
