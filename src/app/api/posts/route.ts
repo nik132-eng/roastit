@@ -4,6 +4,26 @@ import { prisma } from "@/lib/db";
 import cloudinary from "@/lib/cloudinary";
 import { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 
+export async function GET() {
+  try {
+    const posts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        author: true,
+      },
+    });
+    return NextResponse.json(posts);
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return NextResponse.json(
+      { message: "Failed to fetch posts", error: error instanceof Error ? error.message : "Unknown error" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const session = await getAuthSession();
