@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RoastIt 🔥
+
+Welcome to RoastIt, a full-stack web application where you can share anything—a photo, a drawing, a screenshot—and have the community roast it for fun.
+
+This project was built with the help of an AI software engineering agent.
+
+![RoastIt Screenshot](https://i.imgur.com/YOUR_SCREENSHOT_ID.png) <!-- TODO: Add a real screenshot -->
+
+## Features
+
+*   **Secure User Authentication:** Sign up and sign in using your Google account.
+*   **Image Uploads:** Easily upload images with a title using a modern interface.
+*   **Cloud Storage:** Images are stored and delivered via Cloudinary for scalability.
+*   **The Roast Feed:** A gallery of all user-submitted images on the home page.
+*   **Dedicated Roast Pages:** View a single image and all the roasts (comments) it has received.
+*   **Interactive Roasting:** Submit your own roasts on any post.
+*   **User Profiles:** View a user's profile and all the images they have posted.
+
+## Tech Stack
+
+*   **Framework:** [Next.js](https://nextjs.org/) (React/Node.js)
+*   **Language:** [TypeScript](https://www.typescriptlang.org/)
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+*   **Database:** [Prisma](https://www.prisma.io/) ORM with SQLite
+*   **Authentication:** [NextAuth.js (Auth.js)](https://next-auth.js.org/)
+*   **Image Handling:** [Cloudinary](https://cloudinary.com/)
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Prerequisites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   [Node.js](https://nodejs.org/en/) (v18 or later recommended)
+*   [npm](https://www.npmjs.com/)
+*   A [Google Cloud](https://console.cloud.google.com/) account for OAuth credentials.
+*   A [Cloudinary](https://cloudinary.com/) account for image storage.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Installation & Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/roastit.git
+    cd roastit
+    ```
 
-## Learn More
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+3.  **Set up your environment variables:**
+    *   Rename the `.env.example` file to `.env`.
+    *   Open the `.env` file and add your credentials. See the file for details on where to find the Google and Cloudinary keys.
+    *   Generate a `NEXTAUTH_SECRET` by running the following command in your terminal:
+        ```bash
+        openssl rand -base64 32
+        ```
+        Paste the output into the `.env` file.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4.  **Set up the database:**
+    *   Prisma will create and set up the SQLite database based on the schema.
+    ```bash
+    npx prisma db push
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. You can now sign in, upload images, and start roasting!
