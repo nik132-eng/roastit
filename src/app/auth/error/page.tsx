@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import Link from "next/link";
 
 function AuthErrorContent() {
   const searchParams = useSearchParams();
@@ -13,12 +14,12 @@ function AuthErrorContent() {
       <p className="text-gray-300 mb-4">
         There was an error during authentication: {error || "Unknown error"}
       </p>
-      <a
+      <Link
         href="/"
         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Go Home
-      </a>
+      </Link>
     </div>
   );
 }
