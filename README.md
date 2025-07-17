@@ -4,7 +4,7 @@ Welcome to RoastIt, a full-stack web application where you can share anything—
 
 This project was built with the help of an AI software engineering agent.
 
-![RoastIt Screenshot](https://i.imgur.com/YOUR_SCREENSHOT_ID.png) <!-- TODO: Add a real screenshot -->
+<img width="1470" height="731" alt="Screenshot 2025-07-18 at 3 45 50 AM" src="https://github.com/user-attachments/assets/82de5302-8077-4644-9c34-c53c434da7e4" />
 
 ## Features
 
