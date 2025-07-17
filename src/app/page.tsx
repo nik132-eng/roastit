@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
-import Image from "next/image";
 import Link from "next/link";
+import { HeroSection } from "@/components/HeroSection";
+import { PostCard } from "@/components/PostCard";
 
 export default async function Home() {
   try {
@@ -25,55 +26,66 @@ export default async function Home() {
 
     if (posts.length === 0) {
       return (
-        <main className="container mx-auto p-4">
-          <div className="text-center py-8">
-            <h2 className="text-xl text-gray-400">No posts found</h2>
-            <p className="text-gray-500 mt-2">Be the first to upload something to roast!</p>
-            <Link 
-              href="/upload" 
-              className="mt-4 inline-block px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-            >
-              Upload Post
-            </Link>
-          </div>
-        </main>
+        <>
+          <HeroSection />
+          <main className="container mx-auto px-4 py-20 lg:py-24">
+            <div className="text-center py-20 lg:py-32 motion-preset-fade-lg motion-delay-300">
+              <div className="motion-preset-bounce motion-delay-500 mb-8">
+                <div className="text-8xl lg:text-9xl mb-6">🎭</div>
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent mb-6">
+                  No posts yet!
+                </h2>
+              </div>
+              <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-12 motion-preset-slide-up motion-delay-700 max-w-2xl mx-auto">
+                Be the first to upload something for the community to roast!
+              </p>
+              <Link 
+                href="/upload" 
+                className="motion-preset-pop motion-delay-1000 inline-flex items-center px-8 py-4 lg:px-10 lg:py-5 text-lg lg:text-xl font-semibold text-white bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 rounded-full hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl motion-preset-bounce-lg"
+              >
+                <span className="mr-3">🔥</span>
+                Start Roasting
+                <span className="ml-3">🎯</span>
+              </Link>
+            </div>
+          </main>
+        </>
       );
     }
 
     return (
-      <main className="container mx-auto p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {posts.map((post) => {
-            // Find the corresponding post with author data
-            const postWithAuthor = postsWithAuthors.find(p => p.id === post.id);
-            
-            return (
-              <div key={post.id} className="border rounded-lg overflow-hidden bg-gray-800 flex flex-col">
-                <Link href={`/post/${post.id}`} className="block relative w-full h-64">
-                  <Image
-                    src={post.imageUrl}
-                    alt={post.title}
-                    fill
-                    className="object-cover"
-                  />
-                </Link>
-                <div className="p-4">
-                  <Link href={`/post/${post.id}`}>
-                    <h2 className="text-lg font-bold truncate hover:underline">{post.title}</h2>
-                  </Link>
-                  {postWithAuthor?.author ? (
-                    <Link href={`/user/${postWithAuthor.author.id}`} className="text-sm text-gray-400 hover:underline">
-                      by {postWithAuthor.author.name ?? 'Unknown'}
-                    </Link>
-                  ) : (
-                    <span className="text-sm text-gray-400">by Unknown Author</span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </main>
+      <>
+        <HeroSection />
+        <main id="posts" className="container mx-auto px-4 py-20 lg:py-24">
+          <div className="text-center mb-20 lg:mb-24">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-6 motion-preset-fade-lg">
+              Latest Roasts 🔥
+            </h2>
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 motion-preset-slide-up motion-delay-300 max-w-3xl mx-auto">
+              Check out what the community is roasting today!
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 xl:gap-10 max-w-7xl mx-auto">
+            {posts.map((post, index) => {
+              // Find the corresponding post with author data
+              const postWithAuthor = postsWithAuthors.find(p => p.id === post.id);
+              
+              return (
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  author={postWithAuthor?.author}
+                  index={index}
+                />
+              );
+            })}
+          </div>
+          
+          {/* Add spacing at bottom */}
+          <div className="h-20 lg:h-32"></div>
+        </main>
+      </>
     );
   } catch (error) {
     console.error("Error loading posts:", error);

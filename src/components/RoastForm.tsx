@@ -35,26 +35,40 @@ export default function RoastForm({ postId }: { postId: string }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200/50 dark:border-gray-600/50">
       <div>
-        <label htmlFor="roast" className="block text-sm font-medium text-gray-300">
-          Your Roast
+        <label htmlFor="roast" className="block text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+          🔥 Your Roast
         </label>
         <textarea
           id="roast"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          rows={3}
-          className="mt-1 block w-full rounded-md bg-gray-800 border-gray-600 text-white focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          rows={4}
+          className="w-full rounded-xl bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-purple-500 focus:ring-purple-500 sm:text-sm p-3 resize-none transition-all duration-200"
+          placeholder="Write your witty roast here... 🔥"
           required
         />
       </div>
       <button
         type="submit"
-        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="w-full inline-flex justify-center items-center py-3 px-6 border border-transparent shadow-sm text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Submitting..." : "Submit Roast"}
+        {isSubmitting ? (
+          <>
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Submitting...
+          </>
+        ) : (
+          <>
+            <span className="mr-2">🚀</span>
+            Submit Roast
+          </>
+        )}
       </button>
     </form>
   );
