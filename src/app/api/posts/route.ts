@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import cloudinary, { UploadApiResponse } from "cloudinary";
+import cloudinary from "@/lib/cloudinary";
+import { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,13 +26,13 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await image.arrayBuffer();
     const buffer = new Uint8Array(arrayBuffer);
 
-    const uploadResult = (await new Promise((resolve, reject) => {
-      cloudinary.v2.uploader
+    const uploadResult = (await new Promise<UploadApiResponse>((resolve, reject) => {
+      cloudinary.uploader
         .upload_stream(
           {
             tags: ["roastit-uploads"],
           },
-          (error, result) => {
+          (error: UploadApiErrorResponse | undefined, result?: UploadApiResponse) => {
             if (error) {
               reject(error);
               return;
@@ -44,7 +45,7 @@ export async function POST(req: NextRequest) {
           }
         )
         .end(buffer);
-    })) as UploadApiResponse;
+    }));
 
     const { secure_url } = uploadResult;
 
