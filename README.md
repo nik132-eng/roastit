@@ -4,7 +4,10 @@ Welcome to RoastIt, a full-stack web application where you can share anything—
 
 This project was built with the help of an AI software engineering agent.
 
-<img width="1470" height="731" alt="Screenshot 2025-07-18 at 3 45 50 AM" src="https://github.com/user-attachments/assets/82de5302-8077-4644-9c34-c53c434da7e4" />
+<img width="1461" height="747" alt="Screenshot 2025-07-18 at 5 09 49 AM" src="https://github.com/user-attachments/assets/a1606806-0a74-47ad-b530-7db331f4c30a" />
+
+<img width="1470" height="592" alt="Screenshot 2025-07-18 at 5 10 29 AM" src="https://github.com/user-attachments/assets/cf22b0a7-3d2b-44b7-bf54-ec7458b72655" />
+
 
 ## Features
 
