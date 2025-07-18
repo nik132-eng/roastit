@@ -19,9 +19,11 @@ interface PostCardProps {
     image: string | null;
   } | null;
   index: number;
+  roastCount?: number;
+  isTrending?: boolean;
 }
 
-export function PostCard({ post, author, index }: PostCardProps) {
+export function PostCard({ post, author, index, roastCount = 0, isTrending = false }: PostCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -106,6 +108,42 @@ export function PostCard({ post, author, index }: PostCardProps) {
                   <span className="text-lg sm:text-2xl">🔥</span>
                 </div>
               </motion.div>
+
+              {/* Trending Badge */}
+              {isTrending && (
+                <motion.div
+                  initial={{ scale: 0, rotate: -45 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ 
+                    type: "spring",
+                    stiffness: 300,
+                    delay: 0.2
+                  }}
+                  className="absolute top-2 left-2 sm:top-4 sm:left-4 z-30"
+                >
+                  <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg animate-pulse-glow">
+                    🔥 TRENDING
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Roast Count Badge */}
+              {roastCount > 0 && (
+                <motion.div
+                  initial={{ scale: 0, y: 20 }}
+                  animate={{ scale: 1, y: 0 }}
+                  transition={{ 
+                    type: "spring",
+                    stiffness: 300,
+                    delay: 0.3
+                  }}
+                  className="absolute top-2 right-14 sm:top-4 sm:right-20 z-30"
+                >
+                  <div className="bg-purple-500/90 backdrop-blur-sm text-white text-xs font-semibold px-2 py-1 rounded-full shadow-lg border border-purple-300/50">
+                    💬 {roastCount}
+                  </div>
+                </motion.div>
+              )}
 
               {/* Interactive Badge */}
               <motion.div
